@@ -32,15 +32,15 @@ jobs:
 
     # - name: windows current path
     #   run: echo {"token":"${{secrets.PERSON_TOKEN}}","AWS_ACCESS_KEY_ID":"${{ secrets.AWS_ACCESS_KEY_ID }}"} >> config.json
-    # - name: install dependencies
-    #   run: npm install
+    - name: install dependencies
+      run: npm install
      
-    # - name: set github secrets build windows
-    #   env:
-    #     GH_TOKEN: ${{secrets.PERSON_TOKEN}}
-    #   run: npm run buildwin
-    # - name: remove from dist
-    #   run: npm run remove-win
+    - name: set github secrets build windows
+      env:
+        GH_TOKEN: ${{secrets.PERSON_TOKEN}}
+      run: npm run buildwin
+    - name: remove from dist
+      run: npm run createfolder
     # - name: Create Release
     #   id: create_release
     #   uses: actions/create-release@v1
@@ -55,15 +55,15 @@ jobs:
     #       - Second Change
     #     draft: true
     #     prerelease: false 
-    # - uses: shallwefootball/s3-upload-action@master
-    #   name: Upload S3
-    #   id: S3
-    #   with:
-    #     aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    #     aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-    #     aws_bucket: pipetech
-    #     source_dir: 'dist'
-    #     destination_dir: ''   
+    - uses: shallwefootball/s3-upload-action@master
+      name: Upload to S3
+      id: S3
+      with:
+        aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+        aws_bucket: github-actions-testaarush
+        source_dir: 'dist'
+        destination_dir: '/electron-client-builds'   
     # - name: Show URL
     #   env:
     #     MY_ENV_VAR: ${{ steps.S3.outputs.object_locations }}
