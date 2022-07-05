@@ -18,7 +18,7 @@
     "test": "craco test",
     "eject": "craco eject",
     "createfolder" : "rimraf dist/.icon-ico dist/builder-debug.yml dist/win-unpacked",
-    "macDeleteFiles" : "rimraf dist/.icon-icns dist/mac dist dist/*.zip dist/builder-debug.yml",
+    "macDeleteFiles" : "rimraf dist/.icon-icns dist/mac dist/*.zip dist/builder-debug.yml",
     "linuxDeleteFiles" : "rimraf dist/linux-unpacked"
   },
   "build": {
