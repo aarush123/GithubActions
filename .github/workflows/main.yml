@@ -42,7 +42,7 @@ jobs:
       with:
         aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-        aws_bucket: upload-alpha-new/electron-client-builds
+        aws_bucket: upload-alpha-new/electron-client-builds/windows
         source_dir: 'dist'
         destination_dir: windows
 
@@ -60,6 +60,8 @@ jobs:
       env:
         GH_TOKEN: ${{secrets.PERSON_TOKEN}}
       run: npm run buildmac
+    - name: remove from dist
+      run: npm run macDeleteFiles
     - uses: shallwefootball/s3-upload-action@master
       name: Upload to S3
       id: S3

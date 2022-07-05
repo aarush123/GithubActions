@@ -17,7 +17,8 @@
     "buildLinux": "npm run build && electron-builder -l",
     "test": "craco test",
     "eject": "craco eject",
-    "createfolder" : "rimraf dist/.icon-ico dist/builder-debug.yml dist/win-unpacked"
+    "createfolder" : "rimraf dist/.icon-ico dist/builder-debug.yml dist/win-unpacked",
+    "macDeleteFiles" : "rimraf dist/.icon-icns dist/mac dist dist/*.zip dist/builder-debug.yml"
   },
   "build": {
     "asar": true,
@@ -74,7 +75,8 @@
       "target": [
         "deb"
       ],
-      "icon": "public/logo512.png"
+      "icon": "public/logo512.png",
+      "maintainer": "Aarush <aarush.sharma@clouwood.com>"
     }
   },
   "eslintConfig": {
