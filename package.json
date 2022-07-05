@@ -14,6 +14,7 @@
     "electron:start": "electron .",
     "buildwin": "npm run build && electron-builder build --win --x64",
     "buildmac": "npm run build && electron-builder -m",
+    "buildLinux": "npm run build && electron-builder -l",
     "test": "craco test",
     "eject": "craco eject",
     "createfolder" : "rimraf dist/.icon-ico dist/builder-debug.yml dist/win-unpacked"
@@ -70,7 +71,10 @@
       "deleteAppDataOnUninstall": true
     },
     "linux": {
-      "icon": "public"
+      "target": [
+        "deb"
+      ],
+      "icon": "public/logo512.png"
     }
   },
   "eslintConfig": {

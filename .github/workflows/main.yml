@@ -26,12 +26,7 @@ jobs:
     - uses: actions/setup-node@master
       with:
         node-version: 14
-    # - name: Checkout code
-    #   uses: actions/checkout@v2
-   
 
-    # - name: windows current path
-    #   run: echo {"token":"${{secrets.PERSON_TOKEN}}","AWS_ACCESS_KEY_ID":"${{ secrets.AWS_ACCESS_KEY_ID }}"} >> config.json
     - name: install dependencies
       run: npm install
      
@@ -41,20 +36,6 @@ jobs:
       run: npm run buildwin
     - name: remove from dist
       run: npm run createfolder
-    # - name: Create Release
-    #   id: create_release
-    #   uses: actions/create-release@v1
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-    #   with:
-    #     tag_name: v1.0.8
-    #     release_name: Release v1.0.8
-    #     body: |
-    #       Changes in this Release
-    #       - First Change
-    #       - Second Change
-    #     draft: true
-    #     prerelease: false 
     - uses: shallwefootball/s3-upload-action@master
       name: Upload to S3
       id: S3
@@ -64,57 +45,52 @@ jobs:
         aws_bucket: upload-alpha-new/electron-client-builds
         source_dir: 'dist'
         destination_dir: windows
-        
-    # - name: Show URL
-    #   env:
-    #     MY_ENV_VAR: ${{ steps.S3.outputs.object_locations }}
 
-    #   run: echo ${{ env.MY_ENV_VAR }}
-    # - name: Send mail
-    #   uses: dawidd6/action-send-mail@v3
-    #   with:
-    #     # Required mail server address:
-    #     server_address: smtp.gmail.com
-    #     # Required mail server port:
-    #     server_port: 465
-    #     # Optional (recommended): mail server username:
-    #     username: sumit.sharma@clouwood.com
-    #     # Optional (recommended) mail server password:
-    #     password: gxefmyxwigdtjsma
+  build_on_mac:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@master
+      with:
+        node-version: 14
+    - name: install dependencies
+      run: npm install
+     
+    - name: set github secrets build macos
+      env:
+        GH_TOKEN: ${{secrets.PERSON_TOKEN}}
+      run: npm run buildmac
+    - uses: shallwefootball/s3-upload-action@master
+      name: Upload to S3
+      id: S3
+      with:
+        aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+        aws_bucket: upload-alpha-new/electron-client-builds
+        source_dir: 'dist'
+        destination_dir: macos
 
-    #     # Required mail subject:
-    #     subject: BUILD CREATED
-    #     # Required recipients' addresses:
-    #     to: sumit.sharma@clouwood.com
-    #     # ${{secrets.NOTIFY_EMAILS}}
-    #     #  sumitchansoriya@gmail.com
-    #     # Optional carbon copy recipients:
-    #     cc: cc@clouwood.com
-    #     # Required sender full name (address can be skipped):
-    #     from: SUMIT CHANSORIYA # <user@example.com>
-    #     # Optional whether this connection use TLS (default is true if server_port is 465)
-    #     secure: true
-    #     # Optional plain body:
-    #     body: Build ${{ secrets.GITHUB_TOKEN }} job of ${{github.repository}}   and links are ${{join(steps.S3.outputs.object_locations,', ')}}  completed successfully!
-    #     # Optional carbon copy recipients:
-    #     # Optional converting Markdown to HTML (set content_type to text/html too):
-    #     convert_markdown: true
-    #     # Optional attachments:
-    #     # Optional priority: 'high', 'normal' (default) or 'low'
-    #     priority: high 
-    #   # uses: hkusu/s3-upload-action@v2
-    #   # with:
-    #   #   aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    #   #   aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    #   #   aws-region: us-east-2
-    #   #   aws-bucket: pipetech
-    #   #   file-path: './dist/ReactElectron Setup 1.0.6.exe'
-    #   #   output-file-url: 'true' # specify true
-    #   #   destination-dir: '/'
+  build_on_linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@master
+      with:
+        node-version: 14
 
-
-
-
-          
-  
-          
+    - name: install dependencies
+      run: npm install
+     
+    - name: set github secrets build windows
+      env:
+        GH_TOKEN: ${{secrets.PERSON_TOKEN}}
+      run: npm run buildLinux
+    - uses: shallwefootball/s3-upload-action@master
+      name: Upload to S3
+      id: S3
+      with:
+        aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+        aws_bucket: upload-alpha-new/electron-client-builds
+        source_dir: 'dist'
+        destination_dir: linux
