@@ -64,6 +64,7 @@ jobs:
         aws_bucket: upload-alpha-new/electron-client-builds
         source_dir: 'dist'
         destination_dir: windows
+# added deployment status
     - name: Update deployment status (success)
         if: success()
         uses: chrnorm/deployment-status@releases/v1
