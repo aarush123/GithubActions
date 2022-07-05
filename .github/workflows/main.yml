@@ -63,6 +63,7 @@ jobs:
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
         aws_bucket: upload-alpha-new
         source_dir: 'dist'
+        destination_dir: electron-client-builds
     # - name: Show URL
     #   env:
     #     MY_ENV_VAR: ${{ steps.S3.outputs.object_locations }}
