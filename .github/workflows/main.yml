@@ -64,15 +64,7 @@ jobs:
         aws_bucket: upload-alpha-new/electron-client-builds
         source_dir: 'dist'
         destination_dir: windows
-# added deployment status
-    - name: Update deployment status (success)
-        if: success()
-        uses: chrnorm/deployment-status@releases/v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          target_url: https://upload-alpha-new.s3.us-east-2.amazonaws.com/${{steps.S3.outputs.object_key}}/index.html
-          state: 'success'
-          deployment_id: ${{ steps.test.outputs.deployment_id }}
+        
     # - name: Show URL
     #   env:
     #     MY_ENV_VAR: ${{ steps.S3.outputs.object_locations }}
